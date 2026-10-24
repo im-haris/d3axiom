@@ -1,0 +1,359 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>D3 Axiom</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+/* Layout: dark single-page studio site. Hero with three pillars, Amazon as the featured pillar, process, FAQ, booking. Gold accent only on actions and key numbers. */
+:root{
+  --bg:#07070A; --s1:#0D0D12; --s2:#131318; --bd:rgba(255,255,255,0.08);
+  --gold:#C9A84C; --gold2:#E8C97E; --blue:#4F8EF7; --ink:#07070A;
+  --tx:#F0F0F5; --mt:rgba(240,240,245,0.62); --mt2:rgba(240,240,245,0.36);
+  --f-display:'Syne',system-ui,sans-serif; --f-body:'DM Sans',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:15px}
+body{background:var(--bg);color:var(--tx);font-family:var(--f-body);line-height:1.65;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--gold2);outline-offset:3px}
+.wrap{max-width:1080px;margin:0 auto}
+section{padding-block:72px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;letter-spacing:-0.02em;line-height:1.1}
+h2{font-size:clamp(26px,4vw,38px);font-weight:800;margin-bottom:14px}
+h3{font-size:17px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em}
+.eyebrow{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.lede{color:var(--mt);max-width:60ch;font-size:16px}
+.btn{display:inline-block;padding:12px 26px;border-radius:40px;font-weight:700;font-size:14px;text-decoration:none;background:var(--gold);color:var(--ink);transition:transform .15s,opacity .15s;border:0;cursor:pointer;font-family:inherit}
+.btn:hover{opacity:.9;transform:translateY(-1px)}
+.btn.ghost{background:transparent;color:var(--tx);border:1px solid var(--bd);font-weight:500}
+.btn.ghost:hover{border-color:var(--gold)}
+
+/* nav */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(7,7,10,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--bd);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:60}
+.nav{display:flex;align-items:center;justify-content:space-between;height:58px;gap:16px}
+.logo{font-family:var(--f-display);font-weight:800;font-size:18px;text-decoration:none}
+.logo em{font-style:normal;color:var(--gold)}
+.links{display:flex;gap:24px;list-style:none}
+.links a{font-size:13px;color:var(--mt);text-decoration:none}
+.links a:hover{color:var(--tx)}
+.nav .btn{padding:8px 18px;font-size:12.5px}
+@media(max-width:760px){.links{display:none}}
+
+/* hero */
+#hero{padding-block:72px 56px}
+.hero-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:48px;align-items:center}
+h1{font-size:clamp(34px,5.4vw,60px);font-weight:800;margin-bottom:20px}
+h1 .g{color:var(--gold)}
+.hero p.lede{margin-bottom:28px}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap}
+.proof{display:flex;gap:28px;flex-wrap:wrap;margin-top:36px;padding-top:24px;border-top:1px solid var(--bd)}
+.proof div{min-width:0}
+.proof b{display:block;font-family:var(--f-display);font-size:26px;color:var(--gold2);font-variant-numeric:tabular-nums}
+.proof span{font-size:12px;color:var(--mt2)}
+.pillars{display:grid;gap:10px;min-width:0}
+.pillar{display:flex;gap:14px;align-items:flex-start;padding:16px 18px;background:var(--s1);border:1px solid var(--bd);border-radius:14px;text-decoration:none;transition:border-color .2s}
+.pillar:hover{border-color:rgba(201,168,76,.5)}
+.pillar .n{font-family:var(--f-display);font-weight:800;color:var(--gold);font-size:13px;padding-top:2px;min-width:22px}
+.pillar b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.pillar span{font-size:13px;color:var(--mt)}
+@media(max-width:860px){.hero-grid{grid-template-columns:1fr}}
+
+/* person strip */
+.person{background:var(--s1);border-block:1px solid var(--bd);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.person .wrap{display:grid;grid-template-columns:auto 1fr auto;gap:24px;align-items:center;padding-block:28px}
+.avatar{width:56px;height:56px;border-radius:50%;background:var(--s2);border:1px solid var(--gold);display:grid;place-items:center;font-family:var(--f-display);font-weight:800;color:var(--gold2)}
+.person p{color:var(--mt);max-width:62ch}
+.person p b{color:var(--tx);font-weight:500}
+@media(max-width:700px){.person .wrap{grid-template-columns:1fr}}
+
+/* amazon */
+#amazon{background:linear-gradient(180deg,var(--bg),var(--s1) 35%,var(--bg));margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px))}
+.pain{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:32px 0}
+.pain div{padding:18px;border:1px solid var(--bd);border-radius:12px;background:var(--bg);min-width:0}
+.pain small{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--mt2);margin-bottom:8px}
+.pain p{font-size:14px}
+.pain p b{color:var(--gold2);font-weight:500}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.card{padding:22px;background:var(--s1);border:1px solid var(--bd);border-radius:14px;min-width:0;transition:border-color .2s}
+.card:hover{border-color:rgba(201,168,76,.4)}
+.card p{font-size:14px;color:var(--mt)}
+.card ul{list-style:none;margin-top:12px;display:grid;gap:4px}
+.card li{font-size:12.5px;color:var(--mt2);padding-left:14px;position:relative}
+.card li::before{content:"";position:absolute;left:0;top:.7em;width:6px;height:1px;background:var(--gold)}
+.card.feat{background:var(--s2);border-color:rgba(201,168,76,.35)}
+.tag{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--gold2);margin-bottom:10px}
+.channels{display:flex;flex-wrap:wrap;gap:8px;margin-top:28px;align-items:center}
+.channels span{padding:6px 14px;border:1px solid var(--bd);border-radius:30px;font-size:12.5px;color:var(--mt)}
+.channels b{font-size:12px;color:var(--mt2);font-weight:500;margin-right:6px}
+.audit{margin-top:36px;padding:28px;border:1px solid rgba(201,168,76,.4);border-radius:16px;background:var(--s2);display:flex;justify-content:space-between;gap:24px;align-items:center;flex-wrap:wrap}
+.audit > div{flex:1 1 320px;min-width:0}
+.audit p{color:var(--mt);font-size:14px}
+@media(max-width:860px){.grid{grid-template-columns:1fr 1fr}.pain{grid-template-columns:1fr}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
+
+/* build + creative */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:32px}
+.stack{padding:26px;background:var(--s1);border:1px solid var(--bd);border-radius:14px;min-width:0}
+.stack ul{list-style:none;display:grid;gap:10px;margin-top:16px}
+.stack li{display:flex;gap:12px;font-size:14px;color:var(--mt);align-items:baseline}
+.stack li b{color:var(--tx);font-weight:500;min-width:112px}
+@media(max-width:760px){.split{grid-template-columns:1fr}.stack li{flex-direction:column;gap:0}}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:32px;counter-reset:s}
+.step{padding:20px;border-top:2px solid var(--gold);background:var(--s1);border-radius:0 0 12px 12px;min-width:0}
+.step small{font-size:11px;color:var(--gold2);letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.step p{font-size:13.5px;color:var(--mt);margin-top:4px}
+@media(max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.steps{grid-template-columns:1fr}}
+
+/* faq */
+.faq{margin-top:28px;display:grid;gap:8px;max-width:780px}
+details{border:1px solid var(--bd);border-radius:12px;background:var(--s1);padding:0 20px}
+summary{cursor:pointer;padding:16px 0;font-weight:500;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";color:var(--gold);font-size:20px;line-height:1}
+details[open] summary::after{content:"\2212"}
+details p{color:var(--mt);padding-bottom:16px;font-size:14px}
+
+/* contact */
+#book{margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));background:var(--s1);border-top:1px solid var(--bd)}
+.book-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.book-grid > div{min-width:0}
+form{display:grid;gap:12px}
+label{font-size:12px;color:var(--mt2);display:grid;gap:5px}
+input,select,textarea{width:100%;background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:11px 13px;color:var(--tx);font:inherit;font-size:14px}
+textarea{min-height:92px;resize:vertical}
+.out{display:none;margin-top:12px;padding:14px;border:1px dashed rgba(201,168,76,.5);border-radius:10px;font-size:13px;color:var(--mt);white-space:pre-wrap}
+.out.on{display:block}
+.mail{margin-top:22px;font-size:14px;color:var(--mt)}
+.mail code{color:var(--gold2);user-select:all;font-family:inherit}
+@media(max-width:820px){.book-grid{grid-template-columns:1fr;gap:32px}}
+
+footer{padding-block:28px;border-top:1px solid var(--bd);margin-inline:calc(-1*max(16px,env(safe-area-inset-left,0px)));padding-inline:max(16px,env(safe-area-inset-left,0px));font-size:12.5px;color:var(--mt2)}
+footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+<header class="top">
+  <div class="wrap nav">
+    <a class="logo" href="#hero">D3 <em>Axiom</em></a>
+    <ul class="links">
+      <li><a href="#amazon">Amazon &amp; Marketplaces</a></li>
+      <li><a href="#build">Design &amp; Development</a></li>
+      <li><a href="#process">How it works</a></li>
+      <li><a href="#faq">FAQ</a></li>
+    </ul>
+    <a class="btn" href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Book a free call</a>
+  </div>
+</header>
+
+<main>
+<section id="hero">
+  <div class="wrap hero-grid">
+    <div class="hero">
+      <p class="eyebrow">Studio for online sellers and growing brands</p>
+      <h1>Your store sells more.<br><span class="g">Your site converts better.</span></h1>
+      <p class="lede">D3 Axiom runs Amazon advertising and marketplace accounts, designs the interfaces, builds the websites and cuts the videos that go with them. One expert to talk to. A specialist team behind him.</p>
+      <div class="cta-row">
+        <a class="btn" href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Book a free 30-minute audit</a>
+        <a class="btn ghost" href="#amazon">See Amazon services</a>
+      </div>
+      <div class="proof">
+        <div><b>20-40%</b><span>typical ACoS reduction on managed accounts</span></div>
+        <div><b>5</b><span>marketplaces: Amazon, Walmart, eBay, TikTok Shop, Shopify</span></div>
+        <div><b>12+</b><span>countries served, fully remote</span></div>
+      </div>
+    </div>
+    <div class="pillars">
+      <a class="pillar" href="#amazon"><span class="n">A</span><div><b>Amazon &amp; marketplace growth</b><span>PPC, listings, full account management, multi-channel</span></div></a>
+      <a class="pillar" href="#build"><span class="n">B</span><div><b>Design &amp; development</b><span>UI/UX, websites, Shopify, mobile apps, AI chatbots</span></div></a>
+      <a class="pillar" href="#build"><span class="n">C</span><div><b>Video &amp; creative</b><span>AI video, product ads, brand graphics</span></div></a>
+    </div>
+  </div>
+</section>
+
+<div class="person">
+  <div class="wrap">
+    <div class="avatar" aria-hidden="true">H</div>
+    <p><b>You hire Haris, not a ticket queue.</b> I scope the work, brief the specialists, review everything before it reaches you, and I am the person on your calls. The team scales with the job; the accountability stays with one name.</p>
+    <a class="btn ghost" href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Talk to Haris</a>
+  </div>
+</div>
+
+<section id="amazon">
+  <div class="wrap">
+    <p class="eyebrow">Amazon &amp; marketplace growth</p>
+    <h2>Stop paying Amazon for clicks that never buy.</h2>
+    <p class="lede">Most sellers lose margin in three places. We find all three in the first audit, rank them by money recovered, and fix them in that order.</p>
+
+    <div class="pain">
+      <div><small>Leak 1</small><p>Ad spend on <b>broad, untested keywords</b> pushes ACoS past your margin.</p></div>
+      <div><small>Leak 2</small><p>Listings that rank but <b>do not convert</b>, so every click is wasted.</p></div>
+      <div><small>Leak 3</small><p>Stockouts, suppressed ASINs and <b>Seller Central issues</b> nobody caught in time.</p></div>
+    </div>
+
+    <div class="grid">
+      <article class="card feat">
+        <span class="tag">Most requested</span>
+        <h3>Amazon PPC management</h3>
+        <p>Sponsored Products, Brands and Display built around your margin, not around Amazon's suggestions.</p>
+        <ul><li>ACoS and TACoS reduction</li><li>Keyword harvesting and negatives</li><li>Campaign structure rebuilds</li></ul>
+      </article>
+      <article class="card">
+        <h3>Listing optimization</h3>
+        <p>Titles, bullets, A+ content and images written for the search term and the buyer at the same time.</p>
+        <ul><li>Keyword research</li><li>Competitor gap analysis</li><li>Conversion-rate testing</li></ul>
+      </article>
+      <article class="card">
+        <h3>Full account management</h3>
+        <p>Seller Central run end to end, so you stop firefighting and start planning.</p>
+        <ul><li>Catalogue and inventory</li><li>Suppression and policy fixes</li><li>Order and returns monitoring</li></ul>
+      </article>
+      <article class="card">
+        <h3>Multi-channel selling</h3>
+        <p>Take what works on Amazon to the channels where your buyers already are.</p>
+        <ul><li>Walmart, eBay, Shopify</li><li>TikTok Shop launch and ads</li><li>One catalogue, many storefronts</li></ul>
+      </article>
+      <article class="card">
+        <h3>Paid social</h3>
+        <p>Meta and TikTok campaigns that send outside traffic to your listings and lift organic rank.</p>
+        <ul><li>Creative tested weekly</li><li>Brand Referral Bonus ready</li></ul>
+      </article>
+      <article class="card">
+        <h3>Weekly reporting</h3>
+        <p>One plain report: what spent, what sold, what we change next. No dashboards to decode.</p>
+        <ul><li>Profit-focused metrics</li><li>Decisions listed, not buried</li></ul>
+      </article>
+    </div>
+
+    <div class="channels"><b>Channels</b><span>Amazon</span><span>Walmart</span><span>eBay</span><span>TikTok Shop</span><span>Shopify</span></div>
+
+    <div class="audit">
+      <div>
+        <h3>Free account audit, no commitment</h3>
+        <p>Send read-only access or a screenshot export. Within a few days you get a ranked list of where your account is losing money and what fixing each item is worth. Keep it and run it yourself if you like.</p>
+      </div>
+      <a class="btn" href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Book my Amazon audit</a>
+    </div>
+  </div>
+</section>
+
+<section id="build">
+  <div class="wrap">
+    <p class="eyebrow">Design, development and video</p>
+    <h2>The store, the site and the content around it.</h2>
+    <p class="lede">Traffic is only half the job. The same studio builds the pages, apps and videos that turn visitors into orders.</p>
+    <div class="split">
+      <div class="stack">
+        <h3>Design and development</h3>
+        <ul>
+          <li><b>UI/UX design</b>Research-backed screens and flows for apps and dashboards.</li>
+          <li><b>Websites</b>Fast, SEO-ready sites in React, WordPress and Shopify.</li>
+          <li><b>E-commerce</b>Storefronts and checkout flows built to convert.</li>
+          <li><b>Mobile apps</b>iOS and Android from one codebase.</li>
+          <li><b>ERP and AI chatbots</b>Custom internal tools and support bots.</li>
+        </ul>
+      </div>
+      <div class="stack">
+        <h3>Video and creative</h3>
+        <ul>
+          <li><b>AI video</b>Product demos and ads produced in days, not weeks.</li>
+          <li><b>Amazon video</b>Listing videos and Sponsored Brands video ads.</li>
+          <li><b>Graphic design</b>Brand identity, packaging art and A+ content graphics.</li>
+          <li><b>Social cuts</b>Short-form edits for TikTok, Reels and Shorts.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process">
+  <div class="wrap">
+    <p class="eyebrow">How it works</p>
+    <h2>From first call to first result.</h2>
+    <div class="steps">
+      <div class="step"><small>Day 0</small><h3>Free call or audit</h3><p>30 minutes with Haris. We look at your numbers and your goal.</p></div>
+      <div class="step"><small>Days 1-3</small><h3>Priority plan</h3><p>A ranked list of fixes with the expected gain for each.</p></div>
+      <div class="step"><small>Weekly</small><h3>Work and report</h3><p>The team executes. You get one short report every week.</p></div>
+      <div class="step"><small>Ongoing</small><h3>You decide</h3><p>Approve changes, pause anything, leave any month. No lock-in.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="wrap">
+    <p class="eyebrow">Questions sellers ask first</p>
+    <h2>Before you book.</h2>
+    <div class="faq">
+      <details><summary>Am I hiring one person or an agency?</summary><p>You talk to Haris on every call and every report. Specialists in PPC, design, development and video do the production work under his review.</p></details>
+      <details><summary>What does the free audit include?</summary><p>A review of your campaigns, listings and account health, with a ranked list of fixes. There is no obligation to continue.</p></details>
+      <details><summary>Do you need full access to my Seller Central?</summary><p>No. We start with read-only reports. Write access is added only when you approve the plan.</p></details>
+      <details><summary>Which markets do you work in?</summary><p>US, UK, EU and Australia on Amazon, plus Walmart, eBay, TikTok Shop and Shopify.</p></details>
+      <details><summary>Can I hire you only for a website or a video?</summary><p>Yes. Design, development and video projects are scoped and priced on their own.</p></details>
+      <details><summary>How is the work priced?</summary><p>Amazon management is a monthly retainer. Builds and videos are fixed-price per project. You get the number before any work starts.</p></details>
+    </div>
+  </div>
+</section>
+
+<section id="book">
+  <div class="wrap book-grid">
+    <div>
+      <p class="eyebrow">Start here</p>
+      <h2>Book a free 30-minute call.</h2>
+      <p class="lede">Pick a time that suits your timezone. Bring your store link or project idea and leave with a clear next step.</p>
+      <p style="margin-top:22px"><a class="btn" href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Choose a time on Calendly</a></p>
+      <p class="mail">Prefer email? <code>quantumdigitalweb3@gmail.com</code> <button class="btn ghost" id="copyMail" type="button" style="padding:5px 14px;font-size:12px;margin-left:6px">Copy</button></p>
+    </div>
+    <div>
+      <h3>Or write your brief first</h3>
+      <form id="brief">
+        <label for="name">Your name<input id="name" required></label>
+        <label for="svc">What do you need?
+          <select id="svc">
+            <option>Amazon PPC management</option>
+            <option>Amazon listing optimization</option>
+            <option>Full Amazon account management</option>
+            <option>Walmart / eBay / TikTok Shop / Shopify</option>
+            <option>UI/UX design</option>
+            <option>Website or e-commerce build</option>
+            <option>Mobile app or AI chatbot</option>
+            <option>AI video or graphics</option>
+          </select>
+        </label>
+        <label for="link">Store or website link<input id="link" placeholder="amazon.com/stores/... or yoursite.com"></label>
+        <label for="msg">Goal in one or two lines<textarea id="msg" placeholder="Example: ACoS is 45% and I want it under 25%."></textarea></label>
+        <button class="btn" type="submit">Build my message</button>
+      </form>
+      <div class="out" id="out" aria-live="polite"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap"><span>D3 Axiom. Amazon, design, development and video. 100% remote.</span><span>quantumdigitalweb3@gmail.com</span></div>
+</footer>
+
+<script>
+(function(){
+  var copyBtn=document.getElementById('copyMail');
+  copyBtn.addEventListener('click',function(){
+    var t='quantumdigitalweb3@gmail.com';
+    var done=function(){copyBtn.textContent='Copied';setTimeout(function(){copyBtn.textContent='Copy'},1600)};
+    try{navigator.clipboard.writeText(t).then(done,function(){})}catch(e){}
+  });
+  document.getElementById('brief').addEventListener('submit',function(e){
+    e.preventDefault();
+    var g=function(i){return document.getElementById(i).value.trim()};
+    var text='Hi Haris, I am '+g('name')+'. I need help with: '+g('svc')+'.\nLink: '+(g('link')||'not shared yet')+'\nGoal: '+(g('msg')||'to be discussed')+'\n\nSend this to quantumdigitalweb3@gmail.com or paste it into the Calendly booking notes.';
+    var out=document.getElementById('out');
+    out.textContent=text;out.classList.add('on');
+    try{navigator.clipboard.writeText(text.split('\n\nSend')[0])}catch(err){}
+  });
+})();
+</script>
+
+</body></html>
