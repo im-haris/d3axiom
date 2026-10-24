@@ -19,9 +19,9 @@
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"D3 Axiom",
 "description":"Amazon PPC management, listing optimization and full account management, plus Walmart, eBay, TikTok Shop and Shopify growth, design, development and video.",
 "email":"haris@imcodezero.com","telephone":"+923215922201",
-"founder":{"@type":"Person","name":"Haris Shabbir"},
+"founder":{"@type":"Person","name":"Haris Shabbir","jobTitle":"Founder","hasCredential":{"@type":"EducationalOccupationalCredential","credentialCategory":"degree","name":"MS in Project Management"}},
 "areaServed":["US","GB","DE","AU","EU"],
-"sameAs":[]}
+"sameAs":["https://www.youtube.com/@talkswithharis"]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -319,12 +319,30 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .who .av{position:relative;overflow:hidden}
 .who .av img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .who a{font-size:13px;color:var(--gold2)}
+
+/* podcast */
+.vgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
+.vcard{border:1px solid var(--bd);border-radius:20px;background:var(--s1);overflow:hidden;min-width:0;transition:border-color .2s,transform .2s}
+.vcard:hover{border-color:rgba(216,176,90,.45);transform:translateY(-3px)}
+.vthumb{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;background:#000;cursor:pointer;overflow:hidden}
+.vthumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s}
+.vthumb:hover img{transform:scale(1.04)}
+.vthumb iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.play{position:absolute;left:50%;top:50%;width:64px;height:44px;margin:-22px 0 0 -32px;border-radius:12px;background:#FF0033;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.play::after{content:"";position:absolute;left:26px;top:13px;border-style:solid;border-width:9px 0 9px 15px;border-color:transparent transparent transparent #fff}
+.vmeta{padding:20px 22px 24px}
+.vmeta h3{margin:8px 0 6px}
+.vmeta p{font-size:14px;color:var(--mt)}
+.vtag{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--gold)}
+.btn.yt{background:#FF0033;color:#fff}
+.btn.yt:hover{box-shadow:0 10px 30px -8px rgba(255,0,51,.6)}
+@media(max-width:960px){.vgrid{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
 <body>
 
-<div class="promo">Black Friday is November 27. Get a free Amazon ad audit before the rush. <a href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Book yours</a></div>
+<div class="promo" id="promo">Black Friday is November 27. Get a free Amazon ad audit before the rush. <a href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Book yours</a></div>
 <header class="top">
   <div class="wrap nav">
     <a class="logo" href="#hero">D3<i>.</i>Axiom</a>
@@ -332,6 +350,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
       <li><a href="#amazon">Amazon</a></li>
       <li><a href="#q4">Q4 Plan</a></li>
       <li><a href="#studio">Studio</a></li>
+      <li><a href="#podcast">Podcast</a></li>
       <li><a href="#build">Design &amp; Dev</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#faq">FAQ</a></li>
@@ -579,10 +598,43 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <div>
       <p class="eyebrow">The studio</p>
       <blockquote>You hire <em>one person.</em> He has a team, and he answers for every result.</blockquote>
-      <div class="who"><div class="av">H<img src="haris.jpg" alt="Haris Shabbir" onerror="this.remove()"></div><div><b>Haris Shabbir</b><span>Founder, D3 Axiom</span><!-- <a href="https://www.linkedin.com/in/YOUR-PROFILE" target="_blank" rel="noopener">LinkedIn profile &rarr;</a> --></div></div>
+      <div class="who"><div class="av">H<img src="haris.jpg" alt="Haris Shabbir" onerror="this.remove()"></div><div><b>Haris Shabbir</b><span>Founder, D3 Axiom &middot; MS in Project Management</span><!-- <a href="https://www.linkedin.com/in/YOUR-PROFILE" target="_blank" rel="noopener">LinkedIn profile &rarr;</a> --></div></div>
+      <p class="lede" style="margin-bottom:16px">I hold an MS in Project Management, and I run every account like a project: clear scope, deadlines, owners and a weekly report you can read in two minutes.</p>
       <p class="lede" style="margin-bottom:28px">I scope the work, brief the specialists, check every deliverable before it reaches you, and join every call. No account managers, no ticket queues, no surprises.</p>
       <div class="cta-row"><a class="btn" href="https://calendly.com/mhskiyani007" target="_blank" rel="noopener">Talk to Haris &rarr;</a><a class="btn wa" href="https://wa.me/923215922201?text=Hi%20Haris%2C%20I%20found%20D3%20Axiom%20and%20would%20like%20to%20talk%20about%20my%20store." target="_blank" rel="noopener"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.7l-.4-.3-3.8 1.2 1.2-3.7-.3-.4c-1.2-1.8-1.8-3.9-1.8-6 0-5.9 4.9-10.7 11-10.7s11 4.8 11 10.7-4.9 10.9-11 10.9zm6-8c-.3-.2-1.9-.9-2.2-1-.3-.1-.5-.2-.7.2-.2.3-.8 1-1 1.2-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.6-1.6-1-.9-1.6-1.9-1.8-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.2 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.4 1.4.6 1.9.7.8.3 1.5.2 2.1.1.6-.1 1.9-.8 2.2-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4z"/></svg> WhatsApp</a></div>
     </div>
+  </div>
+</section>
+
+<section id="podcast">
+  <div class="wrap">
+    <p class="eyebrow">Talks with Haris</p>
+    <h2>Conversations with founders <em class="s">and tech leaders.</em></h2>
+    <p class="lede">On my podcast I sit down with founders and tech leaders from Silicon Valley, Texas and across South Asia. We talk about trust, delivery and doing business across borders. Watch a few minutes to see how I think before we ever get on a call.</p>
+    <div class="vgrid">
+      <div class="vcard">
+        <button class="vthumb" type="button" data-id="0sgakY-W-io" aria-label="Play: Silicon Valley Meets Pakistan">
+          <img src="https://i.ytimg.com/vi/0sgakY-W-io/hqdefault.jpg" alt="Silicon Valley Meets Pakistan" loading="lazy" width="480" height="360">
+          <span class="play" aria-hidden="true"></span>
+        </button>
+        <div class="vmeta"><span class="vtag">US guest</span><h3>Silicon Valley Meets Pakistan</h3><p>IT collaboration insights with Mark (Texas, Silicon Valley) and Osama</p></div>
+      </div>
+      <div class="vcard">
+        <button class="vthumb" type="button" data-id="-7Q6NUwPnfM" aria-label="Play: Solving global IT collaboration challenges">
+          <img src="https://i.ytimg.com/vi/-7Q6NUwPnfM/hqdefault.jpg" alt="Solving global IT collaboration challenges" loading="lazy" width="480" height="360">
+          <span class="play" aria-hidden="true"></span>
+        </button>
+        <div class="vmeta"><span class="vtag">US guest</span><h3>Solving global IT collaboration challenges</h3><p>Silicon Valley x Pakistan, Part 2: trust, communication and delivery across borders</p></div>
+      </div>
+      <div class="vcard">
+        <button class="vthumb" type="button" data-id="hrjKBerj3p4" aria-label="Play: IT challenges, from a CEO">
+          <img src="https://i.ytimg.com/vi/hrjKBerj3p4/hqdefault.jpg" alt="IT challenges, from a CEO" loading="lazy" width="480" height="360">
+          <span class="play" aria-hidden="true"></span>
+        </button>
+        <div class="vmeta"><span class="vtag">Industry leader</span><h3>IT challenges, from a CEO</h3><p>The CEO of CodeVista on payments, talent and expertise gaps</p></div>
+      </div>
+    </div>
+    <p class="cta-row" style="margin-top:32px"><a class="btn yt" href="https://www.youtube.com/@talkswithharis" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg> Watch more on YouTube</a></p>
   </div>
 </section>
 
@@ -629,7 +681,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
     <p class="eyebrow">Questions</p>
     <h2>What sellers ask <em class="s">first.</em></h2>
     <div class="faq">
-      <details><summary>Am I hiring one person or an agency?</summary><p>You talk to Haris on every call and every report. Specialists in PPC, design, development and video do the production under his review.</p></details>
+      <details><summary>Am I hiring one person or an agency?</summary><p>You talk to Haris, founder and MS in Project Management, on every call and every report. Specialists in PPC, design, development and video do the production under his review.</p></details>
       <details><summary>What does the free audit include?</summary><p>A review of campaigns, listings and account health, with a ranked list of fixes and what each is worth. No obligation to continue.</p></details>
       <details><summary>Do you need full access to my Seller Central?</summary><p>No. We start with read-only reports. Write access is added only after you approve the plan.</p></details>
       <details><summary>Which markets do you work in?</summary><p>US, UK, EU and Australia on Amazon, plus Walmart, eBay, TikTok Shop and Shopify.</p></details>
@@ -680,7 +732,7 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </main>
 
 <footer>
-  <div class="wrap"><span>D3 Axiom. Amazon, design, development and video. 100% remote.</span><span><a href="mailto:haris@imcodezero.com" style="color:inherit">haris@imcodezero.com</a> &middot; <a href="https://wa.me/923215922201?text=Hi%20Haris%2C%20I%20found%20D3%20Axiom%20and%20would%20like%20to%20talk%20about%20my%20store." target="_blank" rel="noopener" style="color:inherit">WhatsApp +92 321 5922201</a></span></div>
+  <div class="wrap"><span>D3 Axiom. Amazon, design, development and video. 100% remote.</span><span><a href="mailto:haris@imcodezero.com" style="color:inherit">haris@imcodezero.com</a> &middot; <a href="https://www.youtube.com/@talkswithharis" target="_blank" rel="noopener" style="color:inherit">YouTube</a> &middot; <a href="https://wa.me/923215922201?text=Hi%20Haris%2C%20I%20found%20D3%20Axiom%20and%20would%20like%20to%20talk%20about%20my%20store." target="_blank" rel="noopener" style="color:inherit">WhatsApp +92 321 5922201</a></span></div>
   <div class="wrap legal">
     <div style="width:100%">
       <details><summary>Privacy policy</summary><p>We collect only what you send us through the booking form, email or Calendly, such as your name, contact details and project information. We use it to reply, scope work and deliver services. We do not sell your data. Account access you share is used only for agreed work and is removed when the work ends. To delete your data, email us.</p></details>
@@ -696,6 +748,17 @@ footer .wrap{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
 </div>
 
 <script>
+// hide the Black Friday banner automatically once the sale period is over
+if(new Date()>new Date('2026-12-01')){var pr=document.getElementById('promo');if(pr)pr.remove();}
+document.querySelectorAll('.vthumb').forEach(function(b){
+  b.addEventListener('click',function(){
+    var f=document.createElement('iframe');
+    f.src='https://www.youtube-nocookie.com/embed/'+b.dataset.id+'?autoplay=1&rel=0';
+    f.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+    f.allowFullscreen=true;f.title=b.getAttribute('aria-label');
+    b.innerHTML='';b.appendChild(f);
+  },{once:true});
+});
 (function(){
   var $=function(i){return document.getElementById(i)};
   var fmt=function(n){return '$'+Math.round(n).toLocaleString('en-US')};
