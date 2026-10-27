@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://d3axiom.com/sitemap.xml
