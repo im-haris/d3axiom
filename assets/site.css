@@ -433,6 +433,12 @@ input:focus-visible,textarea:focus-visible,select:focus-visible{outline:2px soli
 .lead-err{color:var(--bad);font-size:13.5px;margin-top:-4px}
 .linkbtn{display:block;background:none;border:0;padding:3px 0;color:var(--mt2);font:inherit;cursor:pointer;text-align:left}
 .linkbtn:hover{color:var(--tx)}
+.promo.spooky{background:linear-gradient(90deg,#FF7A1A,#D8B05A);color:#120A02}
+.promo.sale{background:linear-gradient(90deg,#F2D58F,#D8B05A);color:#120A02}
+.promo.xmas{background:linear-gradient(90deg,#B3261E,#1F6F43);color:#FFF8EC}
+.promo.xmas a{color:#FFF8EC}
+.promo.love{background:linear-gradient(90deg,#F5A3B5,#D8B05A);color:#1A0710}
+.promo.spring{background:linear-gradient(90deg,#9BE3B5,#D8B05A);color:#0B1A10}
 .linkbtn:disabled{opacity:.5;cursor:default}
 .linkbtn.inline{display:inline;color:var(--gold2);text-decoration:underline;padding:0}
 .lead-sugg{font-size:13.5px;color:var(--mt);margin-top:-4px}
