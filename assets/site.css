@@ -391,6 +391,32 @@ footer .soc{margin-top:16px}
 .soc a.s-fb{background:#1877F2;border-color:#1877F2;color:#fff}
 .soc a.s-ig{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fd5949 45%,#d6249f 60%,#285AEB 90%);border-color:transparent;color:#fff}
 .soc a:hover{filter:brightness(1.1);transform:translateY(-2px)}
+/* dropdown navigation */
+.links .dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:4px;background:none;border:0;padding:0;font:inherit;color:var(--mt);cursor:pointer}
+.dd-btn:hover,.dd-btn.on,.dd.open .dd-btn{color:var(--tx)}
+.chev{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2.2;transition:transform .2s}
+.dd.open .chev{transform:rotate(180deg)}
+.dd-panel{display:none;position:absolute;top:calc(100% + 14px);left:-16px;min-width:290px;padding:10px;background:#101015;border:1px solid var(--bd);border-radius:16px;box-shadow:0 24px 60px rgba(0,0,0,.55);z-index:60}
+.dd-panel::before{content:"";position:absolute;left:0;right:0;top:-16px;height:16px}
+.dd-panel.mega{display:none;grid-template-columns:1fr 1fr;gap:6px;min-width:600px}
+.dd.open .dd-panel{display:block}.dd.open .dd-panel.mega{display:grid}
+@media(hover:hover) and (min-width:901px){.dd:hover .dd-panel{display:block}.dd:hover .dd-panel.mega{display:grid}.dd:hover .chev{transform:rotate(180deg)}}
+.dd-panel a{display:block;padding:10px 12px;border-radius:10px;text-decoration:none}
+.dd-panel a:hover,.dd-panel a:focus-visible{background:var(--s2)}
+.dd-panel a b{display:block;color:var(--tx);font-size:14.5px;font-weight:700}
+.dd-panel a span{display:block;color:var(--mt2);font-size:12.5px;margin-top:2px}
+.dd-panel a b .tg{display:inline;margin-left:6px}
+.dd-h{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);font-weight:700;padding:8px 12px 4px}
+@media(max-width:900px){
+  header.top.open{-webkit-backdrop-filter:none;backdrop-filter:none;background:#08080B}
+  header.top.open .links{max-height:calc(100vh - 64px);overflow:auto;background:#08080B}
+  header.top.open .links .dd-btn{display:flex;width:100%;justify-content:space-between;padding:13px 4px;font-size:16px;border-bottom:1px solid var(--bd);color:var(--tx)}
+  .dd-panel,.dd-panel.mega{position:static;min-width:0;box-shadow:none;border:0;background:transparent;padding:4px 0 8px 8px}
+  .dd.open .dd-panel.mega{grid-template-columns:1fr}
+  .dd-panel::before{display:none}
+  header.top.open .links .dd-panel a{border-bottom:0;padding:9px 8px;font-size:15px}
+}
 /* service pages */
 .svc-prose{max-width:760px}
 .svc-prose h2{font-size:clamp(24px,3vw,32px);margin:36px 0 12px}

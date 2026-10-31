@@ -176,6 +176,15 @@ var EMAILJS = {
     m.addEventListener('click',function(){var o=h.classList.toggle('open');m.setAttribute('aria-expanded',o)});
     h.querySelectorAll('.links a').forEach(function(a){a.addEventListener('click',function(){h.classList.remove('open');m.setAttribute('aria-expanded','false')})});
   }
+  // dropdown menus: click/tap to open, Escape or outside click to close
+  var dds=document.querySelectorAll('.dd');
+  function closeAll(except){dds.forEach(function(d){if(d!==except){d.classList.remove('open');var b=d.querySelector('.dd-btn');if(b)b.setAttribute('aria-expanded','false');}});}
+  dds.forEach(function(d){
+    var b=d.querySelector('.dd-btn');
+    b.addEventListener('click',function(e){e.stopPropagation();var o=!d.classList.contains('open');closeAll(d);d.classList.toggle('open',o);b.setAttribute('aria-expanded',o);});
+    d.addEventListener('keydown',function(e){if(e.key==='Escape'){d.classList.remove('open');b.setAttribute('aria-expanded','false');b.focus();}});
+  });
+  document.addEventListener('click',function(e){if(!e.target.closest('.dd'))closeAll();});
   // links that preselect a service in the contact form
   document.querySelectorAll('[data-svc]').forEach(function(a){
     a.addEventListener('click',function(){var sel=document.getElementById('svc');if(sel)sel.value=a.dataset.svc});
