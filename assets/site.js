@@ -109,7 +109,9 @@ var EMAILJS = {
     q('.lead-msgwrap').hidden=opts.message===false;
     q('#lead-step1').reset();q('#lead-step2').reset();
     q('#lead-err').hidden=true;q('#lead-err2').hidden=true;q('#lead-sugg').hidden=true;
-    showStep(1);
+    q('label[for=lead-name]').hidden=!!opts.compact;q('label[for=lead-brand]').hidden=!!opts.compact;
+    if(opts.email)q('#lead-email').value=opts.email;if(opts.name)q('#lead-name').value=opts.name;
+    showStep(1);if(opts.email)showSuggestion();
     modal.hidden=false;document.body.style.overflow='hidden';
     q('#lead-email').focus();
   }
@@ -125,8 +127,8 @@ var EMAILJS = {
     err.hidden=true;email.removeAttribute('aria-invalid');
     if(!configured()){fail('Sorry, we could not submit your email right now.');return;}
     var type=opts.type||'contact';
-    pending={data:{email:v,subject:SUBJECTS[type]||'D3 Axiom website enquiry',enquiry_type:type,
-      name:q('#lead-name').value.trim(),brand:q('#lead-brand').value.trim(),message:q('#lead-msg').value.trim(),
+    pending={data:{email:v,subject:opts.subject||SUBJECTS[type]||'D3 Axiom website enquiry',enquiry_type:type,
+      name:q('#lead-name').value.trim(),brand:q('#lead-brand').value.trim(),message:opts.messageText!=null?opts.messageText:q('#lead-msg').value.trim(),
       page:location.pathname,sent_at:new Date().toISOString(),verified:'yes'}};
     var form=q('#lead-step1');busy(form,true,'Sending code...');
     sendCode().then(function(){
@@ -149,7 +151,7 @@ var EMAILJS = {
     send(EMAILJS.leadTemplateId,pending.data).then(function(){
       form.hidden=true;clearInterval(resendTimer);
       q('#lead-title').textContent='Thank you!';
-      q('#lead-text').textContent=pending.data.enquiry_type==='calculator_unlock'?'Your email is confirmed and unlimited use is now unlocked on this device.':'Your email is confirmed. We have your message and will reply within one business day.';
+      q('#lead-text').textContent=opts.successText?opts.successText:pending.data.enquiry_type==='calculator_unlock'?'Your email is confirmed and unlimited use is now unlocked on this device.':'Your email is confirmed. We have your message and will reply within one business day.';
       if(typeof opts.onSuccess==='function')opts.onSuccess();
       pending=null;
     }).catch(function(){fail('Your email is confirmed, but we could not send your message.');})
@@ -184,24 +186,34 @@ var EMAILJS = {
     fb.forEach(function(x){x.classList.toggle('on',x===b)});
     document.querySelectorAll('[data-cat]').forEach(function(c){c.hidden=b.dataset.f!=='all'&&c.dataset.cat!==b.dataset.f});
   })});
-  // generic lead forms (tools beta, portfolio request)
+  // other lead forms (home enquiry, tools beta, portfolio): confirm the email with a code, then send
+  var LABELS={svc:'Service',link:'Store or website link',msg:'Goal'};
   document.querySelectorAll('form.fs-form').forEach(function(form){
     form.addEventListener('submit',function(e){
       e.preventDefault();
-      if(form.querySelector('[name=_hp]').value)return;
-      var out=form.querySelector('.out'),btn=form.querySelector('button[type=submit]'),label=btn.innerHTML;
+      var hp=form.querySelector('[name=_hp],#hp');if(hp&&hp.value)return;
+      if(!form.reportValidity())return;
+      var out=form.querySelector('.out');
       var show=function(t){out.textContent=t;out.classList.add('on')};
-      var data={_subject:form.dataset.subject,_cc:'quantumdigitalweb3@gmail.com',_template:'table',_captcha:'false'};
-      new FormData(form).forEach(function(v,k){if(k==='_hp')return;data[k]=data[k]?data[k]+', '+v:v});
-      data._autoresponse='Hi '+(data.name||'there')+', thanks for contacting D3 Axiom. Haris has your request and will reply within one business day. WhatsApp: +92 321 5922201';
-      btn.disabled=true;btn.textContent='Sending...';
-      fetch('https://formsubmit.co/ajax/mhskiyani007@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
-      .then(function(r){return r.json()}).then(function(d){
-        if(d.success==='false'||d.success===false)throw new Error(d.message);
-        form.reset();show(form.dataset.ok||'Thanks! We have your request and will reply within one business day.');
-      }).catch(function(){
-        show('Sorry, the request could not be sent. Please message us on WhatsApp: +92 321 5922201.'+(location.protocol==='file:'?' (Forms only work on the live website.)':''));
-      }).then(function(){btn.disabled=false;btn.innerHTML=label});
+      var email='',name='',order=[],vals={};
+      [].forEach.call(form.elements,function(el){
+        var k=el.name||el.id;
+        if(!k||el.type==='submit'||el.type==='button'||k==='_hp'||k==='hp')return;
+        if((el.type==='checkbox'||el.type==='radio')&&!el.checked)return;
+        var v=String(el.value).trim();
+        if(k==='email'){email=v;return;}
+        if(k==='name'){name=v;return;}
+        if(!v)return;
+        var lab=LABELS[k]||k;
+        if(vals[lab]!=null)vals[lab]+=', '+v;else{vals[lab]=v;order.push(lab);}
+      });
+      if(!window.D3Lead||!D3Lead.configured()){show('Sorry, the request could not be sent. Please message us on WhatsApp: +92 321 5922201.');return;}
+      var ok=form.dataset.ok||'Thanks! We have your request and will reply within one business day.';
+      D3Lead.open({compact:true,message:false,type:form.dataset.type||'enquiry',subject:form.dataset.subject,
+        email:email,name:name,messageText:order.map(function(l){return l+': '+vals[l];}).join('\n'),
+        title:'Confirm your email',text:'We will email you a 6-digit code to confirm your address, then send your request.',
+        successText:'Your email is confirmed. '+ok,
+        onSuccess:function(){form.reset();show(ok);}});
     });
   });
 })();
