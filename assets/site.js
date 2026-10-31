@@ -191,7 +191,6 @@ var EMAILJS = {
   document.querySelectorAll('form.fs-form').forEach(function(form){
     form.addEventListener('submit',function(e){
       e.preventDefault();
-      var hp=form.querySelector('[name=_hp],#hp');if(hp&&hp.value)return;
       if(!form.reportValidity())return;
       var out=form.querySelector('.out');
       var show=function(t){out.textContent=t;out.classList.add('on')};
