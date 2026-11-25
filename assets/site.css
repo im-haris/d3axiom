@@ -499,3 +499,11 @@ footer .wrap.fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;gap:32px
 .copy{color:var(--mt2);font-size:12.5px;padding-top:6px}
 @media(max-width:860px){footer .wrap.fgrid{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){footer .wrap.fgrid{grid-template-columns:1fr}}
+
+/* v21 home */
+.home-hero h1{max-width:17ch}
+.hero-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:40px;max-width:720px}
+.hero-stats div{padding:16px 18px;border:1px solid var(--bd);border-radius:16px;background:var(--s1)}
+.hero-stats b{display:block;font-family:var(--f-display);font-size:22px;color:var(--gold2)}
+.hero-stats span{display:block;font-size:13px;color:var(--mt)}
+@media(max-width:640px){.hero-stats{grid-template-columns:1fr}}

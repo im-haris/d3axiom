@@ -53,7 +53,7 @@ var EMAILJS = {
       '<p class="lead-sugg" id="lead-sugg" hidden></p>'+
       '<p class="lead-err" id="lead-err" role="alert" hidden></p>'+
       '<label for="lead-name">Your name (optional)<input id="lead-name" type="text" autocomplete="name"></label>'+
-      '<label for="lead-brand">Brand or store (optional)<input id="lead-brand" type="text"></label>'+
+      '<label for="lead-brand">Company (optional)<input id="lead-brand" type="text"></label>'+
       '<label for="lead-msg" class="lead-msgwrap">Your message<textarea id="lead-msg"></textarea></label>'+
       '<button class="btn" type="submit" style="justify-content:center">Send me a code &rarr;</button>'+
       '<p class="note">We email you a 6-digit code to confirm the address is correct.</p></form>'+
@@ -196,7 +196,7 @@ var EMAILJS = {
     document.querySelectorAll('[data-cat]').forEach(function(c){c.hidden=b.dataset.f!=='all'&&c.dataset.cat!==b.dataset.f});
   })});
   // other lead forms (home enquiry, tools beta, portfolio): confirm the email with a code, then send
-  var LABELS={svc:'Service',link:'Store or website link',msg:'Goal'};
+  var LABELS={svc:'Service',link:'Website link',msg:'Goal'};
   document.querySelectorAll('form.fs-form').forEach(function(form){
     form.addEventListener('submit',function(e){
       e.preventDefault();
